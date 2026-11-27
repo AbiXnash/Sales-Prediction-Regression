@@ -1,44 +1,30 @@
-# Big-Mart-Sales-Prediction
+# Sales-Prediction-Regression
 
-## Introduction
-Big-Mart-Sales-Prediction is a project focused on predicting sales for Big Mart using various machine learning techniques. The project utilizes Jupyter notebooks (`.ipynb` files) to explore and analyze the data, build models, and evaluate their performance.
+Forecasts monthly sales with a Random Forest regressor, in one Jupyter notebook. (This is a separate project from
+[Big-Mart-Sales-Prediction](https://github.com/AbiXnash/Big-Mart-Sales-Prediction).)
 
-## Features
-- Sales prediction using machine learning models
-- Exploratory data analysis and visualization
-- Model evaluation and comparison
-- Easy-to-follow Jupyter notebooks
+## What the notebook does
 
-## Installation
-To install Big-Mart-Sales-Prediction, follow these steps:
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/AbiXnash/Big-Mart-Sales-Prediction.git
-   ```
-   ## Usage
-   To run the Jupyter notebooks, use the following command:
-   ```sh
-   jupyter notebook
-   ```
-   Open the desired `.ipynb` file in your browser to explore and run the code.
+1. Loads `train.csv` (daily sales by `date`, `store` and `item`, as in Kaggle's
+   [Store Item Demand Forecasting](https://www.kaggle.com/competitions/demand-forecasting-kernels-only) data),
+   drops store and item, and sums sales per month.
+2. Makes the series stationary with month-to-month differences, and builds supervised features from the previous
+   12 months' differences.
+3. Holds out the last 12 months, scales to [-1, 1], and trains scikit-learn's `RandomForestRegressor`.
+4. Turns the predicted differences back into sales, plots predictions against actual sales, and prints RMSE, MAE
+   and R².
 
-   ## Contribution
-   Contributions are welcome! Please follow these steps to contribute:
-   1. Fork the repository.
-   2. Create a new branch (`git checkout -b feature-branch`).
-   3. Make your changes and commit them (`git commit -m 'Add new feature'`).
-   4. Push to the branch (`git push origin feature-branch`).
-   5. Open a pull request.
+In the saved run: RMSE ≈ 20,024, MAE ≈ 17,355, R² ≈ **0.985**.
 
-   ## License
-   This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-   ```
+## Run it
 
-3. Save the changes and commit them:
-   ```sh
-   git add README.md
-   git commit -m "Updated README.md with project details"
-   git push origin main
-   ```
+```bash
+pip install pandas numpy scikit-learn matplotlib jupyter
+jupyter notebook Sales_Prediction_Regression.ipynb
+```
 
-This will update the README.md file in your repository with the new content.
+Put `train.csv` next to the notebook first. It isn't included in this repository.
+
+## Licence
+
+MIT, see [LICENSE](LICENSE).
